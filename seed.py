@@ -60,5 +60,5 @@ def main(session):
     session.commit()
 
 if __name__ == "__main__":
-    s= model.connect()
+    s= model.connect() #this is obsolete as of part 2 Ch 2
     main(s)

@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 
 ENGINE = create_engine("sqlite:///ratings.db", echo=False)
-Session = scoped_session(sessionmaker(bind=ENGINE,
+session = scoped_session(sessionmaker(bind=ENGINE,
                                         autocommit=False,
                                         autoflush=False))
 Base = declarative_base()
