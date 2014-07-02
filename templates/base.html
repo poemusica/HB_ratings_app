@@ -1,4 +1,43 @@
  <html>
+  <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/style.css" />
+    </head>
+
+ <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                   <a class="navbar-brand" href="/">Ratings</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if session['email'] %}
+                            <li><a>{{session['email']}}</a></li>
+                            <li><a href="/logout">Log Out</a></li>
+                        {% else %}
+                            <li><a href="/login">Log In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  <div class="container">
             {% with messages = get_flashed_messages() %}
             {% if messages %}

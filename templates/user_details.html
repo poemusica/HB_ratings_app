@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>{{ display_user.id }}</h2>
+<div class="melon-details">
+    <h3>User ratings</h3>
+    <ul>
+        {% for r in display_user.ratings%}
+        <li>
+            {{ r.movie.name }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

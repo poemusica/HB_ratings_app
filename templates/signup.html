@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body %}
+<form class="form-signin" action="/signup"  method="POST">
+    <h2 class="form-signin-heading">Please enter your information</h2>
+    
+    <input type="email" name="email" class="form-control" placeholder="Email Address" required autofocus />
+    <br>
+    
+    <input type="password" name="password1" class="form-control" placeholder="Password" required />
+
+    <input type="password" name="password2" class="form-control" placeholder="Re-enter Password" required />
+    <br>
+ 
+    <label for="male">Male</label>
+    <input type="radio" name="sex" id="male" value="M">
+    <label for="female">Female</label>
+    <input type="radio" name="sex" id="female" value="F">
+    <br>
+    <br>
+    <input type="zipcode" name="zipcode" class="form-control" placeholder="Zipcode" required autofocus />
+    <br>
+    <br>
+
+    <label for="age">Age</label>
+    <select id="age" name="age">
+        {% for i in range(1, 121)%}
+      <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <br>
+    
+    <button type="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+</form>
+{% endblock %}
