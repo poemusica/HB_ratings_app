@@ -13,6 +13,7 @@ def setup_session():
 def index():
     user_list = model.session.query(model.User).limit(20).all()
     # print user_list
+    print "INDEX"
     return render_template("user_list.html", users=user_list)
 
 @app.route("/signup", methods=["GET"])
@@ -97,8 +98,33 @@ def show_user(id):
                   display_user = user)
 
 
+@app.route("/movie/<id>")
+def show_movie(id):
+    """This page shows the details of a given movie and its ratings."""
+    movie = model.session.query(model.Movie).filter_by(id=id).first()
+    return render_template("movie_details.html",
+                  display_movie = movie)
 
+@app.route("/rate", methods=["POST"])
+def update_user_rating():
+    """This handler updates a user's rating for a movie."""
+    user_id = request.form['user_id']
+    movie_id = request.form['movie_id']
+    rating = request.form['rating']
+    prev_rating = model.session.query(model.Rating).filter_by(user_id=user_id).filter_by(movie_id=movie_id).first()
+    print prev_rating
+    if prev_rating:
+        model.session.query(model.Rating).filter_by(user_id=user_id).filter_by(movie_id=movie_id).update({"rating": rating})
+        model.session.commit()
+    else:
+        r = model.Rating(user_id=user_id, movie_id=movie_id, rating=rating)
+        model.session.add(r)
+        model.session.commit()
+    return "moo"
 
+    #flash("Your rating has been updated.")
+    #return redirect("/")
+    # redirect("/movie/%s") % m_id
 
 
 if __name__ == "__main__":

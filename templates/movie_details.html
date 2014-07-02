@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if session['user'] %}
+<a href="/movie/{{ display_movie.id }}" id="rate_button" class="btn btn-large btn-primary">Rate {{ display_movie.name }} </a>
+
+{% endif %}
+
+<div class="melon-details">
+<h3 class="movie_id" data-movie="{{display_movie.name}}" data-movie-id="{{ display_movie.id }}">Ratings for {{ display_movie.name }}</h3>
+<table class="table table-striped">
+    <tr><th>User Id</th><th>Rating</th>
+    {% for r in display_movie.ratings%}
+    <tr>
+        <td><a href="/user/{{ r.user_id }}">User {{ r.user_id }}</a></td>
+        <td id="r.id">{{ r.rating }}</td>
+    {% endfor %}
+</table>
+
+</div> 
+
+<script type="text/javascript">
+//$(".container").insertBefore("<ul class='flashes'>Hello</ul>")
+function post_rating(score){
+    //debugger
+    var rating_data = {
+        "user_id":$("a.user_info").attr("data-user"),
+        "movie_id": $("h3.movie_id").attr("data-movie-id"),
+        "rating": score
+    }
+
+    $.post("/rate", rating_data, function(response){
+        console.log("success");
+        $('div#blockbody').before("<ul class='flashes'><li>Updating your rating...</li></ul>");
+        location.reload();
+    })
+};
+
+function Rate_Movie(event){
+    event.preventDefault();
+    var movie_title = $("h3").attr("data-movie");
+    BootstrapDialog.show({
+        title: movie_title,
+        message: 'What did you think of ' + movie_title + '?',
+        buttons: [
+        {
+            label: '1 (Terrible)',
+            id: "r1",
+            action: function(dialog) {
+                post_rating($(this).attr("id")[1]);
+                dialog.close();
+            } 
+        },
+        
+        {
+            label: '2 (OK)',
+            id: "r2",
+            action: function(dialog) {
+                post_rating($(this).attr("id")[1]);
+                dialog.close();
+            }
+        }, 
+
+        
+        {
+            label: '3 (Liked it)',
+            id: "r3",
+            action: function(dialog) {
+                post_rating($(this).attr("id")[1]);
+                dialog.close();
+            }
+        }, 
+
+        {
+            label: '4 (Really liked it)',
+            id: "r4",
+            action: function(dialog) {
+                post_rating($(this).attr("id")[1]);
+                dialog.close();
+            }
+        },
+
+        {
+            label: '5 (Excellent)',
+            id: "r5",
+            action: function(dialog) {
+                post_rating($(this).attr("id")[1]);
+                dialog.close();
+            }
+        }]
+    });
+
+
+
+};
+
+
+function main(){
+    var open_rating = $("a#rate_button");
+    open_rating.click(function(event){
+        Rate_Movie(event);
+    });
+
+
+
+};
+
+$(document).ready(function(){
+    $(main);
+});
+
+</script>
+
+
+{% endblock %}

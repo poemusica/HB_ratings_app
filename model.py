@@ -22,7 +22,6 @@ class User(Base):
     email = Column(String(64), nullable = True)
     password = Column(String(64), nullable = True)
 
-    #rating = relationship("Rating")
 
 class Movie(Base):
     __tablename__ = "movies"
@@ -30,8 +29,6 @@ class Movie(Base):
     name = Column(String)
     released_at = Column(DateTime, nullable = True)
     imdb_url = Column(String, nullable = True)
-
-    #rating = relationship("Rating")
 
 class Rating(Base):
     __tablename__ = "ratings"

@@ -1,3 +1,7 @@
+a#rate_button{
+  float: right;
+}
+
 li.users{
   list-style-type: none;
 }

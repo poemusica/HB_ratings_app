@@ -1,7 +1,11 @@
  <html>
   <head>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="stylesheet" href="/static/css/bootstrap.dialog.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="/static/js/bootstrap.dialog.js"></script>
     </head>
 
  <div class="navbar navbar-inverse navbar-static-top">
@@ -12,7 +16,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         {% if session['email'] %}
-                            <li><a>{{session['email']}}</a></li>
+                            <li><a data-user="{{ session['user'] }}" class="user_info">{{session['email']}}</a></li>
                             <li><a href="/logout">Log Out</a></li>
                         {% else %}
                             <li><a href="/login">Log In</a></li>
@@ -24,21 +28,7 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <div class="container">
+ <div id="blockbody" class="container">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
