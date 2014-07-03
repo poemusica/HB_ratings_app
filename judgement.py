@@ -9,11 +9,14 @@ def setup_session():
     session['user'] = session.get('user', None)
     session['email'] = session.get('email', None)
 
+@app.route('/movies')
+def show_movies():
+    movie_list = model.session.query(model.Movie).limit(20).all()
+    return render_template("movie_list.html", movies=movie_list)
+
 @app.route('/')
 def index():
     user_list = model.session.query(model.User).limit(20).all()
-    # print user_list
-    print "INDEX"
     return render_template("user_list.html", users=user_list)
 
 @app.route("/signup", methods=["GET"])
@@ -121,10 +124,6 @@ def update_user_rating():
         model.session.add(r)
         model.session.commit()
     return "moo"
-
-    #flash("Your rating has been updated.")
-    #return redirect("/")
-    # redirect("/movie/%s") % m_id
 
 
 if __name__ == "__main__":

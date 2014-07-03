@@ -6,6 +6,10 @@ li.users{
   list-style-type: none;
 }
 
+li.movies{
+  list-style-type: none;
+}
+
 div.melon-summary img {
     width: 200px;
 }
