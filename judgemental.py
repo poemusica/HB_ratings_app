@@ -78,15 +78,37 @@ def view_movie(id):
         rating_nums.append(r.rating)
     avg_rating = float(sum(rating_nums))/len(rating_nums)
 
+    user = db_session.query(User).get(session['user_id'])
     prediction = None
     if not user_rating:
-        user = db_session.query(User).get(g.user_id) 
+        # user = db_session.query(User).get(g.user_id) 
         prediction = user.predict_rating(movie)
-        print prediction
+        effective_rating = prediction
+    else:
+        effective_rating = user_rating.rating
+
+    the_eye = db_session.query(User).filter_by(email="theeye@ofjudgment.com").one()
+    eye_rating = db_session.query(Rating).filter_by(user_id=the_eye.id, movie_id=movie.id).first()
+
+    if not eye_rating:
+        eye_rating = the_eye.predict_rating(movie)
+    else:
+        eye_rating = eye_rating.rating
+
+    if effective_rating:
+        print effective_rating, eye_rating
+        difference = abs(eye_rating - effective_rating)
+        messages = ["I suppose you don't have such bad taste after all.",
+                "And I was just starting to like you.",
+                "I regret every decision I've ever made that has brought me to listen to your opinion.",
+                "Words fail me, as your taste in movies has clearly failed you.",
+                "That movie is great. For a clown to watch. Idiot."]
+        beratement = messages[int(difference)]
+    else: beratement = None
     
     return render_template("movie.html", movie=movie, 
             average=avg_rating, user_rating=user_rating,
-            prediction = prediction)
+            prediction = prediction, beratement=beratement)
 
 @app.route("/rate/<int:id>", methods=["POST"])
 def rate_movie(id):

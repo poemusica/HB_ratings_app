@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
+{% if beratement%}
+<h1>{{beratement}}</h1>
+{% endif %}
 <h2>{{movie.title}} &mdash; {{movie.released_on.year}}</h2>
 <h3> Average rating: {{ "%.2f"%average }}</h3>
 
